@@ -5,11 +5,12 @@ import { getVehicleDetails } from '@/lib/missionUtils';
 export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof getVehicleDetails>): string {
   const booster = mission.rocket?.launcher_stage?.[0];
 
-  // Check if there are any launch or landing attempts
+  // check if there are any launch or landing attempts
   const hasLaunchAttempts = (rocket.launchSuccessCount || 0) + (rocket.launchFailedCount || 0) > 0;
   const hasLandingAttempts = (rocket.landingSuccessCount || 0) + (rocket.landingFailedCount || 0) > 0;
 
   const vehicleIntro = `
+		<br />
 		<h2>Launch Vehicle - ${rocket.fullName || 'Unknown'}</h2>
     ${renderIf(rocket.image_url, (img) => `<img src="${img}" alt="Rocket image" style="max-width:100%; height:auto;" />`)}
     ${renderIf(rocket.desc, (desc) => `<p>${truncate(desc, 310)}</p>`)}
@@ -51,7 +52,7 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
 	`;
 
   const vehicleRecord = `
-		<h3>Vehicle Launch Record</h3>
+		<h3>Launch Record</h3>
    	<p>
       ${
         !hasLaunchAttempts

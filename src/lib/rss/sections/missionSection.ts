@@ -3,7 +3,7 @@ import { renderIf, truncate } from '../utils/templateUtils';
 import { getMissionDetails } from '@/lib/missionUtils';
 
 export function buildMissionSection(mission: Mission, missionDetails: ReturnType<typeof getMissionDetails>): string {
-  // get the header section with mission image and basic info
+  // mission image and basic info
   const headerSection = `
     ${renderIf(
       mission.image,
@@ -20,6 +20,8 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
         `<p><strong>Launch Time:</strong> ${time}</p>
        <br />`
     )}
+
+		${renderIf(missionDetails.desc, (desc) => `<p>${truncate(desc, 310)}</p><br />`)}
   `;
 
   // mission details content
@@ -61,8 +63,6 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
       )}
     </p>
     
-    ${renderIf(missionDetails.desc, (desc) => `<p>${truncate(desc, 310)}</p>`)}
-    
     ${renderIf(mission.rocket?.launcher_stage?.[0]?.landing?.description, (desc) => `<p><em>Landing note: ${truncate(desc, 200)}</em></p>`)}
   `;
 
@@ -77,7 +77,6 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
         style="max-width:100%; height:auto;" 
       />
     </a>
-    <br />
   `
   );
 
