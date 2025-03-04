@@ -33,6 +33,7 @@ export const getVehicleDetails = (item: Rocket) => ({
   name: item.configuration.name ?? 'No available data',
   fullName: item.configuration.full_name ?? null,
   info_url: item.configuration.info_url ?? '',
+  image_url: item.configuration.image_url ?? '/image-placeholder.jpg',
   family: item.configuration.family ?? null,
   variant: item.configuration.variant ?? null,
   active: item.configuration.active ?? false,
