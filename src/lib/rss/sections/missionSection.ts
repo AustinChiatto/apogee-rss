@@ -25,7 +25,7 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
   // mission details content
   const detailsSection = `
 		<br />
-    <h2>Mission Details</h2>
+    <h2>Mission</h2>
     <p>
       ${renderIf(missionDetails.type, (type) => `<strong>Payload Type:</strong> ${type}<br />`)}
       ${renderIf(
@@ -53,10 +53,14 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
       )}
 			</p>
 			${renderIf(mission.rocket?.launcher_stage?.[0]?.landing?.description, (desc) => `<p><em>${desc}</em></p>`)}
+			`;
+
+  const programSection = `
 			${renderIf(
         mission.program && mission.program.length > 0,
         () => `
-				<h3>Mission Program</h3>
+				<br />
+				<h2>Program</h2>
 				<p><strong>${mission.program[0].name}</strong> - ${mission.program[0].type.name}</p>
 				<p>${mission.program[0].description}</p>
 			`
@@ -66,5 +70,6 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
   return `
     ${headerSection}
     ${detailsSection}
+    ${programSection}
   `;
 }
