@@ -45,9 +45,9 @@ export async function GET() {
       const providerDetails = getProviderDetails(mission.launch_service_provider);
 
       const customDescription = `
-			<img src="${mission.image}" alt="Launch image" style="max-width:calc(100%-2rem); height:auto; padding-inline: 1rem; />
+			<p><img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto; /></p>
 			</br>
-			<p style="text-align: center;"><strong>Launch Status</strong>: ${missionDetails.statusName}</p>
+			<p><strong>Launch Status</strong>: ${missionDetails.statusName}</p>
 			<p><strong>Launch Time</strong>: ${missionDetails.net}</p>
 			</br>
 
@@ -58,7 +58,9 @@ export async function GET() {
 			</br><strong>Program</strong> - (Add program info if needed)
 			</br><strong>Launch site</strong> - ${missionDetails.padName}</p>
 			<p>${truncate(missionDetails.desc, 310)}</p>
-			<img src="${missionDetails.vidThumb}" alt="Launch image" style="max-width:calc(100%-2rem); height:auto; padding-inline: 1rem;" />
+			</br>
+			<p><img src="${missionDetails.vidThumb}" alt="Launch image" style="max-width:100%; height:auto;" /></p>
+			</br>
 			<p><a href="${missionDetails.vidUrl}">Watch Now</a></p>
 			</br>
 
@@ -88,7 +90,9 @@ export async function GET() {
 			</br><strong>Founding Year</strong> - ${providerDetails.foundingYear}
 			</br><strong>Launchers</strong> - ${providerDetails.launchers}
 			</br><strong>Spacecraft</strong> - ${providerDetails.spacecraft}</p>
-			<img src="${providerDetails.logo}" alt="Launch image" style="max-width:100%; height:auto;" />
+			</br>
+			<p><img src="${providerDetails.logo}" alt="Launch image" style="max-width:100px; height:auto;" /></p>
+			</br>
 			<p>${truncate(providerDetails.desc, 310)} <a href="${providerDetails.info_url}">Read More</a></p>
 			
 
