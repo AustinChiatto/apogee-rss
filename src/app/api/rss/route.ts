@@ -45,25 +45,21 @@ export async function GET() {
       const providerDetails = getProviderDetails(mission.launch_service_provider);
 
       const customDescription = `
-			<h1>${mission.image}</h1>
 			<img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto;" />
-			</br>
 			<a href="${mission.url}">Watch Now</a>
+			<h1>${mission.name}</h1>
 			</br>
 			<p><strong>Launch Status</strong>: ${missionDetails.statusName}</p>
 			<p><strong>Launch Time</strong>: ${missionDetails.net}</p>
-			</br>
 			<h2>Mission Details</h2>
-			<p>${truncate(missionDetails.desc, 330)}</p>
-			<ul>
-				<li><strong>Mission Type</strong> - ${missionDetails.type}</li>
-				<li><strong>Mission Destination</strong> - ${missionDetails.orbitName}</li>
-				<li><strong>Program</strong> - (Add program info if needed)</li>
-				<li><strong>Launch site</strong> - ${missionDetails.padName}</li>
-			</ul>
+			<p>${truncate(missionDetails.desc, 310)}</p>
+				<p><strong>Mission Type</strong> - ${missionDetails.type}
+				</br><strong>Mission Destination</strong> - ${missionDetails.orbitName}
+				</br><strong>Program</strong> - (Add program info if needed)
+				</br><strong>Launch site</strong> - ${missionDetails.padName}</p>
 			</br>
 			<h2>${rocketDetails.fullName}</h2>
-			<p>${truncate(rocketDetails.desc, 330)}</p>
+			<p>${truncate(rocketDetails.desc, 310)}</p>
 			<a href="${rocketDetails.info_url}">Read More</a>
 			<h5>Vehicle Stats</h5>
 			<ul>
@@ -86,8 +82,7 @@ export async function GET() {
 			<p><strong>Administrator</strong> - ${providerDetails.administrator}</p>
 			<p><strong>Type</strong> - ${providerDetails.type}</p>
 			<p><strong>Founding Year</strong> - ${providerDetails.foundingYear}</p>
-			</br>
-			<p>${truncate(providerDetails.desc, 330)}</p>
+			<p>${truncate(providerDetails.desc, 310)}</p>
 			<a href="${providerDetails.info_url}">Read More</a>
 			<h5>Launch & Landing Record</h5>
 			<ul>
