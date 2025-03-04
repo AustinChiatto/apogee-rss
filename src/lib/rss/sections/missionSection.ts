@@ -37,21 +37,10 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
 
 		${renderIf(
       mission.program && mission.program.length > 0,
-      () => `
-				<p>
-					<strong>Program:</strong> ${mission.program[0].name} - ${mission.program[0].type.name}<br />
-					
-					${renderIf(
-            mission.program[0].description,
-            (desc) => `
-						${desc}
-						`
-          )}
-				</p>  
-			`
-    )}		
-    
-      
+      () =>
+        `<p><strong>Program:</strong> ${mission.program[0].name} - ${mission.program[0].type.name}<br />
+			${renderIf(mission.program[0].description, (desc) => `${desc}`)}</p>`
+    )}
 		<p>
 			${renderIf(missionDetails.padName, (pad) =>
         renderIf(
@@ -60,23 +49,6 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
           () => `<strong>Launch site:</strong> ${pad}`
         )
       )}
-			
-			${renderIf(
-        mission.program?.[0]?.name && mission.program?.[0]?.type?.name,
-        () => `
-					<p>
-						<strong>Program:</strong> ${mission.program[0].name} - ${mission.program[0].type.name}<br />
-						
-						${renderIf(
-              mission.program[0].description,
-              (desc) => `
-							${desc}
-							`
-            )}
-					</p>  
-				`
-      )}
-			
 		</p>
     
     

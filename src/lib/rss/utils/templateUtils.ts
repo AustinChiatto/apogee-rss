@@ -12,16 +12,21 @@ export function truncate(text: string, maxCharacters: number): string {
  * Conditionally renders HTML only if the value exists
  */
 export function renderIf<T>(value: T | null | undefined, render: (val: T) => string, defaultRender?: () => string): string {
-  if (
-    value === null ||
-    value === undefined ||
-    value === '' ||
-    (Array.isArray(value) && value.length === 0) ||
-    (typeof value === 'number' && isNaN(value))
-  ) {
+  try {
+    if (
+      value === null ||
+      value === undefined ||
+      value === '' ||
+      (Array.isArray(value) && value.length === 0) ||
+      (typeof value === 'number' && isNaN(value))
+    ) {
+      return defaultRender ? defaultRender() : '';
+    }
+    return render(value);
+  } catch (error) {
+    console.error('Error in renderIf:', error);
     return defaultRender ? defaultRender() : '';
   }
-  return render(value);
 }
 
 /**
