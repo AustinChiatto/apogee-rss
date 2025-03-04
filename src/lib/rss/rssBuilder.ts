@@ -19,9 +19,22 @@ export function buildRssItemDescription(mission: Mission): string {
   const vehicleSection = buildVehicleSection(mission, rocketDetails);
   const providerSection = buildProviderSection(mission, providerDetails);
 
+  const creditLine = `
+<br />
+<br />
+<p>---</p>
+<br />
+<p style="font-size: 0.8em; color: #666;">
+  Data provided by <a href="https://thespacedevs.com/llapi">Launch Library 2</a> API from 
+  <a href="https://thespacedevs.com/">The Space Devs</a>. 
+  Licensed under Apache License 2.0.
+</p>
+`;
+
   return `
     ${missionSection}
     ${vehicleSection}
     ${providerSection}
+		${creditLine}
 `;
 }

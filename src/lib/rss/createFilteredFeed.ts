@@ -1,7 +1,7 @@
 import RSS from 'rss';
 import { Mission } from '@/types/missionProps';
 import { getMissionDetails } from '@/lib/missionUtils';
-import { buildRssItemDescription } from './rss/rssBuilder';
+import { buildRssItemDescription } from './rssBuilder';
 
 export async function createFilteredFeed(filter: (missions: Mission[]) => Mission[], feedTitle: string, feedDescription: string, feedPath: string) {
   try {

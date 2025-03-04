@@ -1,4 +1,4 @@
-import { createFilteredFeed } from '@/lib/createFilteredFeed';
+import { createFilteredFeed } from '@/lib/rss/createFilteredFeed';
 import { Mission } from '@/types/missionProps';
 
 // returns all missions unchanged - no filter

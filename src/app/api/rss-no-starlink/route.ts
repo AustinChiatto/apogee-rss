@@ -1,5 +1,5 @@
 import { excludeStarlink } from '@/lib/rss/utils/filterMissions';
-import { createFilteredFeed } from '@/lib/createFilteredFeed';
+import { createFilteredFeed } from '@/lib/rss/createFilteredFeed';
 
 export async function GET() {
   return createFilteredFeed(

@@ -1,11 +1,6 @@
 import { onlyStarship } from '@/lib/rss/utils/filterMissions';
-import { createFilteredFeed } from '@/lib/createFilteredFeed';
+import { createFilteredFeed } from '@/lib/rss/createFilteredFeed';
 
 export async function GET() {
-  return createFilteredFeed(
-    onlyStarship,
-    'Upcoming Starship Launches',
-    'Stay up to date with upcoming Starship launches',
-    'rss-starship'
-  );
+  return createFilteredFeed(onlyStarship, 'Upcoming Starship Launches', 'Stay up to date with upcoming Starship launches', 'rss-starship');
 }
