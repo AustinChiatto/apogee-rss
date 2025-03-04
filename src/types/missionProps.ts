@@ -147,7 +147,6 @@ export type Rocket = {
           founding_year: string;
           launchers: string;
           spacecraft: string;
-          parent: any | null;
           image_url: string;
           logo_url: string;
         };
