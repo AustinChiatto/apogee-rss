@@ -62,17 +62,21 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
       )}
 			
 			${renderIf(
-        mission.rocket?.launcher_stage?.[0]?.landing,
-        (landing) => `
-				<strong>Landing:</strong> ${landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Attempted') : 'No attempt'}
-				${renderIf(
-          landing.location?.name,
-          (name) => `
-					on <span title="${landing.location.description || ''}">${name}</span>
+        mission.program?.[0]?.name && mission.program?.[0]?.type?.name,
+        () => `
+					<p>
+						<strong>Program:</strong> ${mission.program[0].name} - ${mission.program[0].type.name}<br />
+						
+						${renderIf(
+              mission.program[0].description,
+              (desc) => `
+							${desc}
+							`
+            )}
+					</p>  
 				`
-        )}
-			`
       )}
+			
 		</p>
     
     
