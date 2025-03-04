@@ -45,6 +45,7 @@ export async function GET() {
       const providerDetails = getProviderDetails(mission.launch_service_provider);
 
       const customDescription = `
+			<h1>${mission.image}</h1>
 			<img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto;" />
 			</br>
 			<a href="${mission.url}">Watch Now</a>
@@ -53,6 +54,7 @@ export async function GET() {
 			<p><strong>Launch Time</strong>: ${missionDetails.net}</p>
 			</br>
 			<h2>Mission Details</h2>
+			<p>${truncate(missionDetails.desc, 330)}</p>
 			<ul>
 				<li><strong>Mission Type</strong> - ${missionDetails.type}</li>
 				<li><strong>Mission Destination</strong> - ${missionDetails.orbitName}</li>
@@ -60,12 +62,9 @@ export async function GET() {
 				<li><strong>Launch site</strong> - ${missionDetails.padName}</li>
 			</ul>
 			</br>
-			<p>${truncate(missionDetails.desc, 330)}</p>
-			</br>
 			<h2>${rocketDetails.fullName}</h2>
 			<p>${truncate(rocketDetails.desc, 330)}</p>
 			<a href="${rocketDetails.info_url}">Read More</a>
-			</br>
 			<h5>Vehicle Stats</h5>
 			<ul>
 				<li><strong>Length</strong> - ${rocketDetails.length ?? 'N/A'} m</li>
