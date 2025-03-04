@@ -46,23 +46,27 @@ export async function GET() {
 
       const customDescription = `
 			<img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto;" />
+			</br>
 			<a href="${mission.url}">Watch Now</a>
+			</br>
 			<p><strong>Launch Status</strong>: ${missionDetails.statusName}</p>
 			<p><strong>Launch Time</strong>: ${missionDetails.net}</p>
 			</br>
 			<h2>Mission Details</h2>
-			<p><strong>Mission Type</strong> - ${missionDetails.type}</p>
-			<p><strong>Mission Destination</strong> - ${missionDetails.orbitName}</p>
-			<p><strong>Program</strong> - (Add program info if needed)</p>
-			<p><strong>Launch site</strong> - ${missionDetails.padName}</p>
+			<ul>
+				<li><strong>Mission Type</strong> - ${missionDetails.type}</li>
+				<li><strong>Mission Destination</strong> - ${missionDetails.orbitName}</li>
+				<li><strong>Program</strong> - (Add program info if needed)</li>
+				<li><strong>Launch site</strong> - ${missionDetails.padName}</li>
+			</ul>
 			</br>
 			<p>${truncate(missionDetails.desc, 330)}</p>
 			</br>
 			<h2>${rocketDetails.fullName}</h2>
 			<p>${truncate(rocketDetails.desc, 330)}</p>
 			<a href="${rocketDetails.info_url}">Read More</a>
-
-			<p><strong>Vehicle Stats</strong></p>
+			</br>
+			<h5>Vehicle Stats</h5>
 			<ul>
 				<li><strong>Length</strong> - ${rocketDetails.length ?? 'N/A'} m</li>
 				<li><strong>Diameter</strong> - ${rocketDetails.diameter ?? 'N/A'} m</li>
@@ -71,15 +75,13 @@ export async function GET() {
 				<li><strong>GTO Capacity</strong> - ${rocketDetails.capacityGto ?? 'N/A'}</li>
 				<li><strong>Thrust</strong> - ${rocketDetails.thrustTo ?? 'N/A'} kN</li>
 			</ul>
-
-			<h4>Launch & Landing Record</h4>
+			<h5>Launch & Landing Record</h5>
 			<ul>
 				<li><strong>Successful Launches</strong> - ${rocketDetails.launchSuccessCount ?? 'N/A'}</li>
 				<li><strong>Failed Launches</strong> - ${rocketDetails.launchFailedCount ?? 'N/A'}</li>
 				<li><strong>Successful Landings</strong> - ${rocketDetails.landingSuccessCount ?? 'N/A'}</li>
 				<li><strong>Failed Landings</strong> - ${rocketDetails.landingFailedCount ?? 'N/A'}</li>
 			</ul>
-
 			</br>
 			<h2>${providerDetails.name}</h2>
 			<p><strong>Administrator</strong> - ${providerDetails.administrator}</p>
@@ -88,7 +90,7 @@ export async function GET() {
 			</br>
 			<p>${truncate(providerDetails.desc, 330)}</p>
 			<a href="${providerDetails.info_url}">Read More</a>
-			<h4>Launch & Landing Record</h4>
+			<h5>Launch & Landing Record</h5>
 			<ul>
 				<li><strong>Successful Launches</strong> - ${providerDetails.launchSuccessCount ?? 'N/A'}</li>
 				<li><strong>Failed Launches</strong> - ${providerDetails.launchFailedCount ?? 'N/A'}</li>
