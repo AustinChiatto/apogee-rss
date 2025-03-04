@@ -45,26 +45,21 @@ export async function GET() {
       const providerDetails = getProviderDetails(mission.launch_service_provider);
 
       const customDescription = `
-			<img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto; />
+			<img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto;" />
 			</br>
 			<p><strong>Launch Status</strong>: ${missionDetails.statusName}</p>
 			<p><strong>Launch Time</strong>: ${missionDetails.net}</p>
 			</br>
-
-
 			<h2>Mission Details</h2>
 			<p><strong>Mission Type</strong> - ${missionDetails.type}
 			</br><strong>Mission Destination</strong> - ${missionDetails.orbitName}
 			</br><strong>Program</strong> - (Add program info if needed)
 			</br><strong>Launch site</strong> - ${missionDetails.padName}</p>
 			<p>${truncate(missionDetails.desc, 310)}</p>
+			<a href="${missionDetails.vidUrl}"><img src="${missionDetails.vidThumb}" alt="Launch image" style="max-width:100%; height:auto;" /></a>
 			</br>
-			<p><a href="${missionDetails.vidUrl}"><img src="${missionDetails.vidThumb}" alt="Launch image" style="max-width:100%; height:auto;" /></a></p>
-			</br>
-
 			<h2>${rocketDetails.fullName}</h2>
 			<p>${truncate(rocketDetails.desc, 310)}</p>
-			
 			<h3>Vehicle Stats</h3>
 			<p><strong>Length</strong> - ${rocketDetails.length ?? 'N/A'} m
 			</br><strong>Diameter</strong> - ${rocketDetails.diameter ?? 'N/A'} m
@@ -72,24 +67,21 @@ export async function GET() {
 			</br><strong>LEO Capacity</strong> - ${rocketDetails.capacityLeo ?? 'N/A'}
 			</br><strong>GTO Capacity</strong> - ${rocketDetails.capacityGto ?? 'N/A'}
 			</br><strong>Thrust</strong> - ${rocketDetails.thrustTo ?? 'N/A'} kN</p>
-
-			<h3>Launch & Landing Record</h3>
+			<h3>${rocketDetails.fullName} Launch Record</h3>
 			<p><strong>Successful Launches</strong> - ${rocketDetails.launchSuccessCount ?? 'N/A'}
 			</br><strong>Failed Launches</strong> - ${rocketDetails.launchFailedCount ?? 'N/A'}
 			</br><strong>Successful Landings</strong> - ${rocketDetails.landingSuccessCount ?? 'N/A'}
 			</br><strong>Failed Landings</strong> - ${rocketDetails.landingFailedCount ?? 'N/A'}</p>
 			</br>
-
 			<h2>${providerDetails.name}</h2>
+			<p>${truncate(providerDetails.desc, 310)} <a href="${providerDetails.info_url}">Read More</a></p>
+			<h3>Agency Details</h3>
 			<p><strong>Administrator</strong> - ${providerDetails.administrator}
 			</br><strong>Type</strong> - ${providerDetails.type}
 			</br><strong>Founding Year</strong> - ${providerDetails.foundingYear}
 			</br><strong>Launchers</strong> - ${providerDetails.launchers}
 			</br><strong>Spacecraft</strong> - ${providerDetails.spacecraft}</p>
-			<p>${truncate(providerDetails.desc, 310)} <a href="${providerDetails.info_url}">Read More</a></p>
-			
-
-			<h3>Launch & Landing Record</h3>
+			<h3>${providerDetails.name} Launch Record</h3>
 			<p><strong>Successful Launches</strong> - ${providerDetails.launchSuccessCount ?? 'N/A'}
 			</br><strong>Failed Launches</strong> - ${providerDetails.launchFailedCount ?? 'N/A'}
 			</br><strong>Successful Landings</strong> - ${providerDetails.landingSuccessCount ?? 'N/A'}
