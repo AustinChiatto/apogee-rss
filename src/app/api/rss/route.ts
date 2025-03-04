@@ -36,7 +36,22 @@ export async function GET() {
       image_url: 'https://apogee-rss.vercel.app/apogee-logo.png',
       language: 'en',
       pubDate: new Date(),
-      ttl: 60
+      ttl: 60,
+      categories: ['space', 'rockets', 'launches'],
+      custom_namespaces: {
+        atom: 'http://www.w3.org/2005/Atom'
+      },
+      custom_elements: [
+        {
+          'atom:link': {
+            _attr: {
+              href: 'https://apogee-rss.vercel.app/api/rss',
+              rel: 'self',
+              type: 'application/rss+xml'
+            }
+          }
+        }
+      ]
     });
 
     // convert missions to rss items
@@ -56,7 +71,8 @@ export async function GET() {
           url: imageUrl,
           type: imageType
         },
-        guid: mission.id
+        guid: mission.id,
+        categories: [missionDetails.type || 'Launch', missionDetails.orbitName || 'Space']
       });
     });
 
