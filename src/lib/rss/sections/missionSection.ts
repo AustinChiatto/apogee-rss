@@ -16,7 +16,19 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
     
     ${renderIf(missionDetails.net, (time) => `<p><strong>Launch Time:</strong> ${time}</p>`)}
 
-		${renderIf(missionDetails.desc, (desc) => `<p>${desc}</p><br />`)}
+		${renderIf(missionDetails.desc, (desc) => `<p>${desc}</p>`)}
+
+		${renderIf(
+      missionDetails.vidUrl,
+      (url) => `
+    <a href="${url}">
+      Watch launch
+    </a>
+		<br />
+  `
+    )}
+
+
   `;
 
   // mission details content
@@ -60,26 +72,8 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
     )}
   `;
 
-  // mission video section (if available)
-  const videoSection = renderIf(
-    missionDetails.vidUrl,
-    (url) => `
-		<br />
-		<h2>Watch This Launch</h2>
-    <a href="${url}">
-      <img 
-        src="${missionDetails.vidThumb ?? '/image-placeholder.jpg'}" 
-        alt="Launch video thumbnail" 
-        style="max-width:100%; height:auto;" 
-      />
-    </a>
-		<br />
-  `
-  );
-
   return `
     ${headerSection}
     ${detailsSection}
-    ${videoSection}
   `;
 }
