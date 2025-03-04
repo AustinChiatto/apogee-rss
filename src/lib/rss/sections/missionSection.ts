@@ -34,13 +34,6 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
       `
       )}
 		</p>
-
-		${renderIf(
-      mission.program && mission.program.length > 0,
-      () =>
-        `<p><strong>Program:</strong> ${mission.program[0].name} - ${mission.program[0].type.name}<br />
-			${renderIf(mission.program[0].description, (desc) => `${desc}`)}</p>`
-    )}
 		<p>
 			${renderIf(missionDetails.padName, (pad) =>
         renderIf(
@@ -49,10 +42,20 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
           () => `<strong>Launch site:</strong> ${pad}`
         )
       )}
+			${renderIf(
+        mission.rocket?.launcher_stage?.[0]?.landing,
+        (landing) => `
+				<strong>Landing:</strong> ${landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Attempted') : 'No attempt'}
+			`
+      )}
 		</p>
-    
-    
-    ${renderIf(mission.rocket?.launcher_stage?.[0]?.landing?.description, (desc) => `<p><em>${desc}</em></p>`)}
+		${renderIf(mission.rocket?.launcher_stage?.[0]?.landing?.description, (desc) => `<p><em>${desc}</em></p>`)}
+		${renderIf(
+      mission.program && mission.program.length > 0,
+      () =>
+        `<p><strong>Program:</strong> ${mission.program[0].name} - ${mission.program[0].type.name}<br />
+			${renderIf(mission.program[0].description, (desc) => `<p>${desc}</p>`)}</p>`
+    )}
   `;
 
   // mission video section (if available)
