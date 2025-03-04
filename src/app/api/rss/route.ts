@@ -45,26 +45,26 @@ export async function GET() {
       const providerDetails = getProviderDetails(mission.launch_service_provider);
 
       const customDescription = `
-			<img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto;" />
+			<img src="${mission.image}" alt="Launch image" style="max-width:calc(100%-2rem); height:auto; padding-inline: 1rem; />
 			</br>
-			<p><strong>Launch Status</strong>: ${missionDetails.statusName}</p>
+			<p style="text-align: center;"><strong>Launch Status</strong>: ${missionDetails.statusName}</p>
 			<p><strong>Launch Time</strong>: ${missionDetails.net}</p>
 			</br>
 
 
 			<h2>Mission Details</h2>
-			<p>${truncate(missionDetails.desc, 310)}</p>
-			<img src="${missionDetails.vidThumb}" alt="Launch image" style="max-width:100%; height:auto;" />
-			<p><a href="${missionDetails.vidUrl}">Watch Now</a></p>
 			<p><strong>Mission Type</strong> - ${missionDetails.type}
 			</br><strong>Mission Destination</strong> - ${missionDetails.orbitName}
 			</br><strong>Program</strong> - (Add program info if needed)
 			</br><strong>Launch site</strong> - ${missionDetails.padName}</p>
+			<p>${truncate(missionDetails.desc, 310)}</p>
+			<img src="${missionDetails.vidThumb}" alt="Launch image" style="max-width:calc(100%-2rem); height:auto; padding-inline: 1rem;" />
+			<p><a href="${missionDetails.vidUrl}">Watch Now</a></p>
 			</br>
 
 
 			<h2>${rocketDetails.fullName}</h2>
-			<p>${truncate(rocketDetails.desc, 310)} <a href="${rocketDetails.info_url}">Read More</a></p>
+			<p>${truncate(rocketDetails.desc, 310)}</p>
 			
 			<h3>Vehicle Stats</h3>
 			<p><strong>Length</strong> - ${rocketDetails.length ?? 'N/A'} m
@@ -83,13 +83,14 @@ export async function GET() {
 
 			
 			<h2>${providerDetails.name}</h2>
-			<img src="${providerDetails.logo}" alt="Launch image" style="max-width:100%; height:auto;" />
-			<p>${truncate(providerDetails.desc, 310)} <a href="${providerDetails.info_url}">Read More</a></p>
 			<p><strong>Administrator</strong> - ${providerDetails.administrator}
 			</br><strong>Type</strong> - ${providerDetails.type}
 			</br><strong>Founding Year</strong> - ${providerDetails.foundingYear}
 			</br><strong>Launchers</strong> - ${providerDetails.launchers}
 			</br><strong>Spacecraft</strong> - ${providerDetails.spacecraft}</p>
+			<img src="${providerDetails.logo}" alt="Launch image" style="max-width:100%; height:auto;" />
+			<p>${truncate(providerDetails.desc, 310)} <a href="${providerDetails.info_url}">Read More</a></p>
+			
 
 			<h3>Launch & Landing Record</h3>
 			<p><strong>Successful Launches</strong> - ${providerDetails.launchSuccessCount ?? 'N/A'}
