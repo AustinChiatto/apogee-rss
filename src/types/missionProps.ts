@@ -107,9 +107,9 @@ export type Rocket = {
     url: string;
     mission_end: string | null;
     destination: string;
-    launch_crew: any[];
-    onboard_crew: any[];
-    landing_crew: any[];
+    launch_crew: CrewMember[];
+    onboard_crew: CrewMember[];
+    landing_crew: CrewMember[];
     spacecraft: {
       id: number;
       url: string;
@@ -190,8 +190,65 @@ export type Rocket = {
         description: string;
       };
     };
-    docking_events: any[];
+    docking_events: DockingEvent[];
   } | null;
+};
+
+export type CrewMember = {
+  id: number;
+  role: {
+    id: number;
+    role: string;
+    priority: number;
+  };
+  astronaut: {
+    id: number;
+    url: string;
+    name: string;
+    type: {
+      id: number;
+      name: string;
+    };
+    in_space: boolean;
+    time_in_space: string;
+    status: {
+      id: number;
+      name: string;
+    };
+    agency: {
+      id: number;
+      url: string;
+      name: string;
+      type: string;
+    };
+    date_of_birth: string;
+    date_of_death: string | null;
+    nationality: string;
+    twitter: string | null;
+    instagram: string | null;
+    bio: string;
+    profile_image: string;
+    wiki: string;
+    last_flight: string;
+    first_flight: string;
+  };
+};
+
+export type DockingEvent = {
+  id: number;
+  url?: string;
+  docking?: string | null;
+  departure?: string | null;
+  docking_location?: {
+    id: number;
+    name: string;
+    location?: {
+      id: number;
+      name: string;
+      abbrev?: string;
+    };
+  };
+  [key: string]: unknown;
 };
 
 export type Provider = {
