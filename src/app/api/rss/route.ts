@@ -2,6 +2,13 @@ import RSS from 'rss';
 import { Mission } from '@/types/missionProps';
 import { getMissionDetails, getProviderDetails, getVehicleDetails } from '@/lib/missionUtils';
 
+function truncate(text: string, maxCharacters: number): string {
+  if (text.length <= maxCharacters) {
+    return text;
+  }
+  return text.slice(0, maxCharacters) + '...';
+}
+
 // fetch upcoming missions
 async function getUpcomingMissions(): Promise<Mission[]> {
   const res = await fetch('https://ll.thespacedevs.com/2.2.0/launch/upcoming/?mode=detailed', {
@@ -38,54 +45,55 @@ export async function GET() {
       const providerDetails = getProviderDetails(mission.launch_service_provider);
 
       const customDescription = `
-			<h2>H2</h2>
-			<h3>H3</h3>
-			<h4>H4</h4>
-			<h5>H5</h5>
-			<p>Launch Status: ${missionDetails.statusName}</p>
-			<p>Launch Time: ${missionDetails.net}</p>
+			<img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto;" />
+			<a href="${mission.url}">Watch Now</a>
+			<p><strong>Launch Status</strong>: ${missionDetails.statusName}</p>
+			<p><strong>Launch Time</strong>: ${missionDetails.net}</p>
 			</br>
 			<h2>Mission Details</h2>
-			<p>Mission Type - ${missionDetails.type}</p>
-			<p>Mission Destination - ${missionDetails.orbitName}</p>
-			<p>Program - (Add program info if needed)</p>
-			<p>Launch site - ${missionDetails.padName}</p>
-			<p>${missionDetails.desc}</p>
+			<p><strong>Mission Type</strong> - ${missionDetails.type}</p>
+			<p><strong>Mission Destination</strong> - ${missionDetails.orbitName}</p>
+			<p><strong>Program</strong> - (Add program info if needed)</p>
+			<p><strong>Launch site</strong> - ${missionDetails.padName}</p>
+			</br>
+			<p>${truncate(missionDetails.desc, 330)}</p>
 			</br>
 			<h2>${rocketDetails.fullName}</h2>
-			<p>${rocketDetails.desc}</p>
+			<p>${truncate(rocketDetails.desc, 330)}</p>
+			<a href="${rocketDetails.info_url}">Read More</a>
 
 			<p><strong>Vehicle Stats</strong></p>
 			<ul>
-				<li>Length - ${rocketDetails.length ?? 'N/A'} m</li>
-				<li>Diameter - ${rocketDetails.diameter ?? 'N/A'} m</li>
-				<li>Launch Mass - ${rocketDetails.launchCost ?? 'N/A'}</li>
-				<li>LEO Capacity - ${rocketDetails.capacityLeo ?? 'N/A'}</li>
-				<li>GTO Capacity - ${rocketDetails.capacityGto ?? 'N/A'}</li>
-				<li>Thrust - ${rocketDetails.thrustTo ?? 'N/A'} kN</li>
+				<li><strong>Length</strong> - ${rocketDetails.length ?? 'N/A'} m</li>
+				<li><strong>Diameter</strong> - ${rocketDetails.diameter ?? 'N/A'} m</li>
+				<li><strong>Launch Mass</strong> - ${rocketDetails.launchCost ?? 'N/A'}</li>
+				<li><strong>LEO Capacity</strong> - ${rocketDetails.capacityLeo ?? 'N/A'}</li>
+				<li><strong>GTO Capacity</strong> - ${rocketDetails.capacityGto ?? 'N/A'}</li>
+				<li><strong>Thrust</strong> - ${rocketDetails.thrustTo ?? 'N/A'} kN</li>
 			</ul>
 
-			<p><strong>Launch & Landing Record</strong></p>
+			<h4>Launch & Landing Record</h4>
 			<ul>
-				<li>Successful Launches - ${rocketDetails.launchSuccessCount ?? 'N/A'}</li>
-				<li>Failed Launches - ${rocketDetails.launchFailedCount ?? 'N/A'}</li>
-				<li>Successful Landings - ${rocketDetails.landingSuccessCount ?? 'N/A'}</li>
-				<li>Failed Landings - ${rocketDetails.landingFailedCount ?? 'N/A'}</li>
+				<li><strong>Successful Launches</strong> - ${rocketDetails.launchSuccessCount ?? 'N/A'}</li>
+				<li><strong>Failed Launches</strong> - ${rocketDetails.launchFailedCount ?? 'N/A'}</li>
+				<li><strong>Successful Landings</strong> - ${rocketDetails.landingSuccessCount ?? 'N/A'}</li>
+				<li><strong>Failed Landings</strong> - ${rocketDetails.landingFailedCount ?? 'N/A'}</li>
 			</ul>
 
 			</br>
 			<h2>${providerDetails.name}</h2>
-			<p>Administrator - ${providerDetails.administrator}</p>
-			<p>Type - ${providerDetails.type}</p>
-			<p>Founding Year - ${providerDetails.foundingYear}</p>
-			<p>${providerDetails.desc}</p>
-
-			<p><strong>Launch & Landing Record</strong></p>
+			<p><strong>Administrator</strong> - ${providerDetails.administrator}</p>
+			<p><strong>Type</strong> - ${providerDetails.type}</p>
+			<p><strong>Founding Year</strong> - ${providerDetails.foundingYear}</p>
+			</br>
+			<p>${truncate(providerDetails.desc, 330)}</p>
+			<a href="${providerDetails.info_url}">Read More</a>
+			<h4>Launch & Landing Record</h4>
 			<ul>
-				<li>Successful Launches - ${providerDetails.launchSuccessCount ?? 'N/A'}</li>
-				<li>Failed Launches - ${providerDetails.launchFailedCount ?? 'N/A'}</li>
-				<li>Successful Landings - ${providerDetails.landingSuccessCount ?? 'N/A'}</li>
-				<li>Failed Landings - ${providerDetails.landingFailedCount ?? 'N/A'}</li>
+				<li><strong>Successful Launches</strong> - ${providerDetails.launchSuccessCount ?? 'N/A'}</li>
+				<li><strong>Failed Launches</strong> - ${providerDetails.launchFailedCount ?? 'N/A'}</li>
+				<li><strong>Successful Landings</strong> - ${providerDetails.landingSuccessCount ?? 'N/A'}</li>
+				<li><strong>Failed Landings</strong> - ${providerDetails.landingFailedCount ?? 'N/A'}</li>
 			</ul>
   `;
 
