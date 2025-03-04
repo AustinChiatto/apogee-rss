@@ -22,7 +22,7 @@ export const getMissionDetails = (item: Mission) => ({
   padLongitude: item?.pad.longitude ?? 0,
   padLatitude: item?.pad.latitude ?? 0,
   vidUrl: item?.vidURLs?.[0]?.url ?? null,
-  vidThumb: item.vidURLs?.[0]?.feature_image ?? '/image-placeholder.jpg',
+  vidThumb: item.vidURLs?.[0]?.feature_image ?? null,
   vidDesc: item.vidURLs?.[0]?.description ?? null,
   orbitalCountYear: item?.orbital_launch_attempt_count_year ?? 0,
   attemptsYear: item?.agency_launch_attempt_count_year ?? 0

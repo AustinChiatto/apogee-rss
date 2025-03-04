@@ -34,7 +34,7 @@ export async function GET() {
       description: 'Stay up to date with the latest rocket launches',
       site_url: 'https://apogee-rss.vercel.app',
       feed_url: 'https://apogee-rss.vercel.app/api/rss',
-      image_url: '/apogee-logo.png',
+      image_url: 'https://apogee-rss.vercel.app/public/apogee-logo.png',
       language: 'en'
     });
 
@@ -43,6 +43,16 @@ export async function GET() {
       const missionDetails = getMissionDetails(mission);
       const rocketDetails = getVehicleDetails(mission.rocket);
       const providerDetails = getProviderDetails(mission.launch_service_provider);
+
+      const videoLinkHTML = missionDetails.vidUrl
+        ? `<a href="${missionDetails.vidUrl}">
+       			<img 
+         			src="${missionDetails.vidThumb ?? '/image-placeholder.jpg'}" 
+         			alt="Launch image" 
+         			style="max-width:100%; height:auto;" 
+       			/>
+     			</a>`
+        : '';
 
       const customDescription = `
 			<img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto;" />
@@ -56,7 +66,7 @@ export async function GET() {
 			<br /><strong>Program</strong> - (Add program info if needed)
 			<br /><strong>Launch site</strong> - ${missionDetails.padName}</p>
 			<p>${truncate(missionDetails.desc, 310)}</p>
-			<a href="${missionDetails.vidUrl}"><img src="${missionDetails.vidThumb}" alt="Launch image" style="max-width:100%; height:auto;" /></a>
+			${videoLinkHTML}
 			<br />
 			<h2>${rocketDetails.fullName}</h2>
 			<p>${truncate(rocketDetails.desc, 310)}</p>
