@@ -45,7 +45,7 @@ export async function GET() {
       const providerDetails = getProviderDetails(mission.launch_service_provider);
 
       const customDescription = `
-			<p><img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto; /></p>
+			<img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto; />
 			</br>
 			<p><strong>Launch Status</strong>: ${missionDetails.statusName}</p>
 			<p><strong>Launch Time</strong>: ${missionDetails.net}</p>
@@ -59,11 +59,8 @@ export async function GET() {
 			</br><strong>Launch site</strong> - ${missionDetails.padName}</p>
 			<p>${truncate(missionDetails.desc, 310)}</p>
 			</br>
-			<p><img src="${missionDetails.vidThumb}" alt="Launch image" style="max-width:100%; height:auto;" /></p>
+			<p><a href="${missionDetails.vidUrl}"><img src="${missionDetails.vidThumb}" alt="Launch image" style="max-width:100%; height:auto;" /></a></p>
 			</br>
-			<p><a href="${missionDetails.vidUrl}">Watch Now</a></p>
-			</br>
-
 
 			<h2>${rocketDetails.fullName}</h2>
 			<p>${truncate(rocketDetails.desc, 310)}</p>
@@ -83,16 +80,12 @@ export async function GET() {
 			</br><strong>Failed Landings</strong> - ${rocketDetails.landingFailedCount ?? 'N/A'}</p>
 			</br>
 
-			
 			<h2>${providerDetails.name}</h2>
 			<p><strong>Administrator</strong> - ${providerDetails.administrator}
 			</br><strong>Type</strong> - ${providerDetails.type}
 			</br><strong>Founding Year</strong> - ${providerDetails.foundingYear}
 			</br><strong>Launchers</strong> - ${providerDetails.launchers}
 			</br><strong>Spacecraft</strong> - ${providerDetails.spacecraft}</p>
-			</br>
-			<p><img src="${providerDetails.logo}" alt="Launch image" style="max-width:100px; height:auto;" /></p>
-			</br>
 			<p>${truncate(providerDetails.desc, 310)} <a href="${providerDetails.info_url}">Read More</a></p>
 			
 
