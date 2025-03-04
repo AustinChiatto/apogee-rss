@@ -28,11 +28,13 @@ export function buildProviderSection(mission: Mission, provider: ReturnType<type
   const providerDetails = `
 		<h3>Organization Details</h3>
 		<p>
-			${renderIf(provider.administrator, (admin) => `<strong>Administrator:</strong> ${admin}<br />`)}
-			${renderIf(provider.type, (type) => `<strong>Type:</strong> ${type}<br />`)}
-			${renderIf(provider.foundingYear, (year) => `<strong>Founding Year:</strong> ${year}<br />`)}
-			${renderIf(provider.launchers, (launchers) => `<strong>Launchers:</strong> ${launchers}<br />`)}
-			${renderIf(provider.spacecraft, (spacecraft) => `<strong>Spacecraft:</strong> ${spacecraft}`)}
+		${renderIf(provider.administrator, (admin) => `<strong>Administrator:</strong> ${admin}<br />`)}
+		${renderIf(provider.type, (type) => `<strong>Type:</strong> ${type}<br />`)}
+		${renderIf(provider.foundingYear, (year) => `<strong>Founding Year:</strong> ${year}<br />`)}
+		</p>
+		<p>
+		${renderIf(provider.launchers, (launchers) => `<strong>Launchers:</strong> ${launchers}<br />`)}
+		${renderIf(provider.spacecraft, (spacecraft) => `<strong>Spacecraft:</strong> ${spacecraft}`)}
 		</p>
 	`;
 

@@ -28,12 +28,29 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
       ${renderIf(
         missionDetails.orbitName,
         (orbit) => `
-        <strong>Destination:</strong> ${orbit}
-        ${renderIf(missionDetails.orbitDesc, (desc) => ` - ${desc}`)}
+        <strong>Destination:</strong> ${missionDetails.orbitAbbrev} - ${orbit}<br />
+        ${renderIf(missionDetails.orbitDesc, (desc) => `${desc}`)}
         <br />
       `
       )}
 		</p>
+
+		${renderIf(
+      mission.program[0].name,
+      (name) => `
+			<p>
+      <strong>Program:</strong> ${name} - ${mission.program[0].type}<br />
+      
+      ${renderIf(
+        mission.program[0].description,
+        (desc) => `
+        ${desc}
+      `
+      )}
+			</p>	
+			`
+    )}
+    
       
 		<p>
 			${renderIf(missionDetails.padName, (pad) =>
@@ -47,9 +64,7 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
 			${renderIf(
         mission.rocket?.launcher_stage?.[0]?.landing,
         (landing) => `
-				<br /><strong>Landing:</strong> ${
-          landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Attempted') : 'No attempt'
-        }
+				<strong>Landing:</strong> ${landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Attempted') : 'No attempt'}
 				${renderIf(
           landing.location?.name,
           (name) => `
@@ -61,7 +76,7 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
 		</p>
     
     
-    ${renderIf(mission.rocket?.launcher_stage?.[0]?.landing?.description, (desc) => `<p><em>Landing note: ${desc}</em></p>`)}
+    ${renderIf(mission.rocket?.launcher_stage?.[0]?.landing?.description, (desc) => `<p><em>${desc}</em></p>`)}
   `;
 
   // mission video section (if available)
