@@ -70,13 +70,20 @@ export function buildRssItemDescription(mission: Mission): string {
   const missionContent = `
 		<h2>Mission Details</h2>
     <p>
-      ${renderIf(missionDetails.type, (type) => `<strong>Mission Type:</strong> ${type}<br />`)}
-      ${renderIf(missionDetails.orbitName, (orbit) => `<strong>Mission Destination:</strong> ${orbit}<br />`)}
-      ${renderIf(missionDetails.padName, (pad) => `<strong>Launch site:</strong><a href="${missionDetails.mapUrl}">${pad}</a>`)}
+      ${renderIf(missionDetails.type, (type) => `<strong>Type:</strong> ${type}<br />`)}
+			${renderIf(
+        missionDetails.orbitName,
+        (orbit) => `
+				<strong>Destination:</strong> ${orbit}
+				${renderIf(missionDetails.orbitDesc, (desc) => ` - ${desc}`)}
+				<br />
+			`
+      )}			
+      ${renderIf(missionDetails.padName, (pad) => `<strong>Launch site: </strong><a href="${missionDetails.mapUrl}">${pad}</a>`)}
 			${renderIf(
         mission.rocket?.launcher_stage?.[0]?.landing,
         (landing) => `
-				<br /><strong>Landing:</strong> ${
+				<br /><strong>Landing site:</strong> ${
           landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Attempted') : 'No attempt'
         }
 				${renderIf(landing.location?.name, (name) => ` on ${name}`)}
@@ -104,10 +111,20 @@ export function buildRssItemDescription(mission: Mission): string {
   const rocketContent = renderIf(rocketDetails, (rocket) => {
     const booster = mission.rocket?.launcher_stage?.[0];
 
+    // Check if there are any launch or landing attempts
+    const hasLaunchAttempts = (rocket.launchSuccessCount || 0) + (rocket.launchFailedCount || 0) > 0;
+    const hasLandingAttempts = (rocket.landingSuccessCount || 0) + (rocket.landingFailedCount || 0) > 0;
+
     return `
     <h2>Launch Vehicle - ${rocket.fullName || 'Unknown'}</h2>
     ${renderIf(rocket.image_url, (img) => `<img src="${img}" alt="Rocket image" style="max-width:100%; height:auto;" />`)}
     ${renderIf(rocket.desc, (desc) => `<p>${truncate(desc, 310)}</p>`)}
+		${renderIf(
+      rocket.info_url,
+      (url) => `
+      <p><a href="${url}">Learn more about ${rocket.fullName || 'this vehicle'}</a></p>
+    `
+    )}
     ${renderIf(
       booster,
       (stage) => `
@@ -137,21 +154,21 @@ export function buildRssItemDescription(mission: Mission): string {
     </p>
     
     <h3>Vehicle Launch Record</h3>
-    <p>
-      ${renderIf(rocket.launchSuccessCount, (count) => `<strong>Successful Launches:</strong> ${count}<br />`)}
-      ${renderIf(rocket.launchFailedCount, (count) => `<strong>Failed Launches:</strong> ${count}<br />`)}
-      ${renderIf(rocket.landingSuccessCount, (count) => `<strong>Successful Landings:</strong> ${count}<br />`)}
-      ${renderIf(rocket.landingFailedCount, (count) => `<strong>Failed Landings:</strong> ${count}<br />`)}
-      ${renderIf(rocket.launchConsecutiveCount, (count) => `<strong>Consecutive Successful Launches:</strong> ${count}<br />`)}
-      ${renderIf(rocket.landingConsecutiveCount, (count) => `<strong>Consecutive Successful Landings:</strong> ${count}`)}
+   <p>
+      ${
+        !hasLaunchAttempts
+          ? `<strong>Launch Attempts:</strong> ${rocket.launchSuccessCount}<br />`
+          : `${renderIf(rocket.launchSuccessCount, (count) => `<strong>Successful Launches:</strong> ${count}<br />`)}
+         ${renderIf(rocket.launchFailedCount, (count) => `<strong>Failed Launches:</strong> ${count}<br />`)}`
+      }
+      
+      ${
+        !hasLandingAttempts
+          ? `<strong>Landing Attempts:</strong> ${rocket.landingSuccessCount}`
+          : `${renderIf(rocket.landingSuccessCount, (count) => `<strong>Successful Landings:</strong> ${count}<br />`)}
+         ${renderIf(rocket.landingFailedCount, (count) => `<strong>Failed Landings:</strong> ${count}`)}`
+      }
     </p>
-    
-    ${renderIf(
-      rocket.info_url,
-      (url) => `
-      <p><a href="${url}">Learn more about ${rocket.fullName || 'this vehicle'}</a></p>
-    `
-    )}
     <br />
   `;
   });
@@ -165,10 +182,14 @@ export function buildRssItemDescription(mission: Mission): string {
     ${renderIf(
       provider.desc,
       (desc) => `
-      <p>
-        ${truncate(desc, 310)} 
-        ${renderIf(provider.info_url, (url) => `<a href="${url}">Read More</a>`)}
-      </p>
+      <p>${truncate(desc, 310)}</p>
+    `
+    )}
+
+		${renderIf(
+      provider.name,
+      (url) => `
+      <p><a href="${url}">Discover more of ${provider.name}</a></p>
     `
     )}
     
