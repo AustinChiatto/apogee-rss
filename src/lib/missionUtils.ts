@@ -21,6 +21,8 @@ export const getMissionDetails = (item: Mission) => ({
   locationName: item?.pad.location.name ?? 'No available data',
   padLongitude: item?.pad.longitude ?? 0,
   padLatitude: item?.pad.latitude ?? 0,
+  mapUrl: item?.pad.map_url ?? null,
+  mapImg: item?.pad.map_image ?? null,
   vidUrl: item?.vidURLs?.[0]?.url ?? null,
   vidThumb: item.vidURLs?.[0]?.feature_image ?? null,
   vidDesc: item.vidURLs?.[0]?.description ?? null,

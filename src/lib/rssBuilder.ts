@@ -68,12 +68,20 @@ export function buildRssItemDescription(mission: Mission): string {
 
   // mission details content
   const missionContent = `
+		<h2>Mission Details</h2>
     <p>
       ${renderIf(missionDetails.type, (type) => `<strong>Mission Type:</strong> ${type}<br />`)}
-      
       ${renderIf(missionDetails.orbitName, (orbit) => `<strong>Mission Destination:</strong> ${orbit}<br />`)}
-      
-      ${renderIf(missionDetails.padName, (pad) => `<strong>Launch site:</strong> ${pad}`)}
+      ${renderIf(missionDetails.padName, (pad) => `<strong>Launch site:</strong><a href="${missionDetails.mapUrl}">${pad}</a>`)}
+			${renderIf(
+        mission.rocket?.launcher_stage?.[0]?.landing,
+        (landing) => `
+				<br /><strong>Landing:</strong> ${
+          landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Attempted') : 'No attempt'
+        }
+				${renderIf(landing.location?.name, (name) => ` on ${name}`)}
+			`
+      )}
     </p>
     
     ${renderIf(missionDetails.desc, (desc) => `<p>${truncate(desc, 310)}</p><br />`)}
@@ -92,23 +100,39 @@ export function buildRssItemDescription(mission: Mission): string {
     )}
   `;
 
-  // vehicle details content
-  const rocketContent = renderIf(
-    rocketDetails,
-    (rocket) => `
-		<h2>Launch Vehicle - ${rocket.fullName || 'Unknown'}</h2>
-    
+  // rocket details content
+  const rocketContent = renderIf(rocketDetails, (rocket) => {
+    const booster = mission.rocket?.launcher_stage?.[0];
+
+    return `
+    <h2>Launch Vehicle - ${rocket.fullName || 'Unknown'}</h2>
     ${renderIf(rocket.image_url, (img) => `<img src="${img}" alt="Rocket image" style="max-width:100%; height:auto;" />`)}
-    
     ${renderIf(rocket.desc, (desc) => `<p>${truncate(desc, 310)}</p>`)}
+    ${renderIf(
+      booster,
+      (stage) => `
+      <h3>Booster Information</h3>
+      <p>
+        ${renderIf(stage.launcher?.serial_number, (serial) => `<strong>Booster:</strong> ${serial}<br />`)}
+        ${renderIf(
+          stage.reused !== null,
+          () =>
+            `<strong>Reused:</strong> ${stage.reused ? 'Yes' : 'No'}${
+              stage.launcher_flight_number ? ` (Flight ${stage.launcher_flight_number})` : ''
+            }<br />`
+        )}
+      </p>
+    `
+    )}
     
     <h3>Vehicle Stats</h3>
     <p>
       ${renderIf(rocket.length, (len) => `<strong>Length:</strong> ${len} m<br />`)}
       ${renderIf(rocket.diameter, (dia) => `<strong>Diameter:</strong> ${dia} m<br />`)}
-      ${renderIf(rocket.launchCost, (cost) => `<strong>Launch Mass:</strong> ${cost}<br />`)}
-      ${renderIf(rocket.capacityLeo, (leo) => `<strong>LEO Capacity:</strong> ${leo}<br />`)}
-      ${renderIf(rocket.capacityGto, (gto) => `<strong>GTO Capacity:</strong> ${gto}<br />`)}
+      ${renderIf(rocket.launchMass, (mass) => `<strong>Launch Mass:</strong> ${mass} tons<br />`)}
+      ${renderIf(rocket.launchCost, (cost) => `<strong>Launch Cost:</strong> $${parseInt(cost).toLocaleString()}<br />`)}
+      ${renderIf(rocket.capacityLeo, (leo) => `<strong>LEO Capacity:</strong> ${leo} kg<br />`)}
+      ${renderIf(rocket.capacityGto, (gto) => `<strong>GTO Capacity:</strong> ${gto} kg<br />`)}
       ${renderIf(rocket.thrustTo, (thrust) => `<strong>Thrust:</strong> ${thrust} kN`)}
     </p>
     
@@ -117,11 +141,20 @@ export function buildRssItemDescription(mission: Mission): string {
       ${renderIf(rocket.launchSuccessCount, (count) => `<strong>Successful Launches:</strong> ${count}<br />`)}
       ${renderIf(rocket.launchFailedCount, (count) => `<strong>Failed Launches:</strong> ${count}<br />`)}
       ${renderIf(rocket.landingSuccessCount, (count) => `<strong>Successful Landings:</strong> ${count}<br />`)}
-      ${renderIf(rocket.landingFailedCount, (count) => `<strong>Failed Landings:</strong> ${count}`)}
+      ${renderIf(rocket.landingFailedCount, (count) => `<strong>Failed Landings:</strong> ${count}<br />`)}
+      ${renderIf(rocket.launchConsecutiveCount, (count) => `<strong>Consecutive Successful Launches:</strong> ${count}<br />`)}
+      ${renderIf(rocket.landingConsecutiveCount, (count) => `<strong>Consecutive Successful Landings:</strong> ${count}`)}
     </p>
+    
+    ${renderIf(
+      rocket.info_url,
+      (url) => `
+      <p><a href="${url}">Learn more about ${rocket.fullName || 'this vehicle'}</a></p>
+    `
+    )}
     <br />
-  `
-  );
+  `;
+  });
 
   // provider details content
   const providerContent = renderIf(
@@ -166,7 +199,6 @@ export function buildRssItemDescription(mission: Mission): string {
   return `
   ${headerSection}
   ${renderSection(`
-    <h2>Mission Details</h2>
     ${missionContent}
   `)}
   ${renderSection(`
@@ -174,7 +206,6 @@ export function buildRssItemDescription(mission: Mission): string {
     ${rocketContent}
   `)}
   ${renderSection(`
-    <h2>Launch Provider ${providerDetails?.name ? `- ${providerDetails.name}` : ''}</h2>
     ${providerContent}
   `)}
 `;
