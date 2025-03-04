@@ -1,7 +1,7 @@
 import RSS from 'rss';
 import { Mission } from '@/types/missionProps';
 import { getMissionDetails } from '@/lib/missionUtils';
-import { buildRssItemDescription } from '@/lib/rssBuilder';
+import { buildRssItemDescription } from '@/lib/rss/rssBuilder';
 
 /**
  * fetches upcoming space launches with 1-hour cache
