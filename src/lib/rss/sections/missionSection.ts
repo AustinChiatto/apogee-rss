@@ -11,30 +11,23 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
         `<img src="${img}" alt="Launch image" style="max-width:100%; height:auto;" />
        <p></p>`
     )}
-    
     ${renderIf(missionDetails.statusName, (status) => `<p><strong>Launch Status:</strong> ${status}</p>`)}
-    
     ${renderIf(missionDetails.net, (time) => `<p><strong>Launch Time:</strong> ${formatDate(time)}</p>`)}
-
 		${renderIf(missionDetails.desc, (desc) => `<p>${desc}</p>`)}
-
 		${renderIf(
       missionDetails.vidUrl,
       (url) => `
 			<p><a href="${url}">Watch launch</a></p>
-			<br />
 			`
     )}
-
-
   `;
 
   // mission details content
   const detailsSection = `
+		<br />
     <h2>Mission Details</h2>
     <p>
-      ${renderIf(missionDetails.type, (type) => `<strong>Type:</strong> ${type}<br />`)}
-      
+      ${renderIf(missionDetails.type, (type) => `<strong>Payload Type:</strong> ${type}<br />`)}
       ${renderIf(
         missionDetails.orbitName,
         (orbit) => `
@@ -43,8 +36,6 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
         <br />
       `
       )}
-		</p>
-		<p>
 			${renderIf(missionDetails.padName, (pad) =>
         renderIf(
           missionDetails.mapUrl,
@@ -60,15 +51,17 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
         }
 			`
       )}
-		</p>
-		${renderIf(mission.rocket?.launcher_stage?.[0]?.landing?.description, (desc) => `<p><em>${desc}</em></p>`)}
-		${renderIf(
-      mission.program && mission.program.length > 0,
-      () =>
-        `<p><strong>Program:</strong> ${mission.program[0].name} - ${mission.program[0].type.name}<br />
-			${renderIf(mission.program[0].description, (desc) => `<p>${desc}</p>`)}</p>`
-    )}
-  `;
+			</p>
+			${renderIf(mission.rocket?.launcher_stage?.[0]?.landing?.description, (desc) => `<p><em>${desc}</em></p>`)}
+			${renderIf(
+        mission.program && mission.program.length > 0,
+        () => `
+				<h3>Mission Program</h3>
+				<p><strong>${mission.program[0].name}</strong> - ${mission.program[0].type.name}</p>
+				<p>${mission.program[0].description}</p>
+			`
+      )}
+			`;
 
   return `
     ${headerSection}

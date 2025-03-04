@@ -23,7 +23,6 @@ export function buildRssItemDescription(mission: Mission): string {
 <br />
 <br />
 <p>---</p>
-<br />
 <p style="font-size: 0.8em; color: #666;">
   Data provided by <a href="https://thespacedevs.com/llapi">Launch Library 2</a> API from 
   <a href="https://thespacedevs.com/">The Space Devs</a>. 

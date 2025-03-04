@@ -20,54 +20,56 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
       <p><a href="${url}">Explore ${rocket.fullName || 'launch vehicle'}</a></p>
     `
     )}
+	`;
 
-    ${renderIf(
-      booster,
-      (stage) => `
-      <h3>Booster Details</h3>
-      <p>
-        ${renderIf(stage.launcher?.serial_number, (serial) => `<strong>Booster:</strong> ${serial}<br />`)}
-        ${renderIf(
-          stage.reused !== null,
-          () =>
-            `<strong>Reused:</strong> ${stage.reused ? 'Yes' : 'No'}${
-              stage.launcher_flight_number ? ` (Flight ${stage.launcher_flight_number})` : ''
-            }<br />`
-        )}
-      </p>
-    `
-    )}
+  const boosterDetails = `
+	${renderIf(
+    booster,
+    (stage) => `
+		<h3>Booster</h3>
+		<p>
+			${renderIf(stage.launcher?.serial_number, (serial) => `<strong>Booster:</strong> ${serial}<br />`)}
+			${renderIf(
+        stage.reused !== null,
+        () =>
+          `<strong>Reused:</strong> ${stage.reused ? 'Yes' : 'No'}${
+            stage.launcher_flight_number ? ` (Flight ${stage.launcher_flight_number})` : ''
+          }<br />`
+      )}
+		</p>
+	`
+  )}
+	`;
 
-		${renderIf(
-      mission.rocket?.spacecraft_stage,
-      (spacecraft) => `
-				<h3>Spacecraft Information</h3>
-				<p>
-					${renderIf(spacecraft.spacecraft?.name, (name) => `<strong>Name:</strong> ${name}<br />`)}
-					${renderIf(spacecraft.spacecraft?.serial_number, (serial) => `<strong>Serial Number:</strong> ${serial}<br />`)}
-					${renderIf(spacecraft.spacecraft?.status?.name, (status) => `<strong>Status:</strong> ${status}<br />`)}
-					${renderIf(spacecraft.destination, (dest) => `<strong>Destination:</strong> ${dest}<br />`)}
-					${renderIf(spacecraft.spacecraft?.spacecraft_config?.capability, (capability) => `<strong>Capability:</strong> ${capability}<br />`)}
+  const spacecraftDetails = `
+	${renderIf(
+    mission.rocket?.spacecraft_stage,
+    (spacecraft) => `
+			<h3>Spacecraft</h3>
+			<p>
+				${renderIf(spacecraft.spacecraft?.name, (name) => `<strong>Name:</strong> ${name}<br />`)}
+				${renderIf(spacecraft.destination, (dest) => `<strong>Destination:</strong> ${dest}<br />`)}
+				${renderIf(spacecraft.spacecraft?.spacecraft_config?.capability, (capability) => `<strong>Capability:</strong> ${capability}<br />`)}
+			</p>
+			
+			${renderIf(spacecraft.spacecraft?.description, (desc) => `<p>${desc}</p>`)}
+			
+			${renderIf(
+        spacecraft.landing,
+        (landing) => `
+				<p><strong>Landing:</strong> 
+					${landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Planned') : 'No attempt'}
+					${renderIf(landing.location?.name, (name) => ` in ${name}`)}
+					${renderIf(landing.description, (desc) => `<br /><em>${desc}</em>`)}
 				</p>
-				
-				${renderIf(spacecraft.spacecraft?.description, (desc) => `<p>${desc}</p>`)}
-				
-				${renderIf(
-          spacecraft.landing,
-          (landing) => `
-					<p><strong>Landing:</strong> 
-						${landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Planned') : 'No attempt'}
-						${renderIf(landing.location?.name, (name) => ` in ${name}`)}
-						${renderIf(landing.description, (desc) => `<br /><em>${desc}</em>`)}
-					</p>
-				`
-        )}
 			`
-    )}
+      )}
+		`
+  )}
 	`;
 
   const vehicleStats = `
-		<h3>Vehicle Stats</h3>
+		<h3>Specifications</h3>
     <p>
       ${renderIf(rocket.length, (len) => `<strong>Length:</strong> ${formatNumber(len)} m<br />`)}
       ${renderIf(rocket.diameter, (dia) => `<strong>Diameter:</strong> ${formatNumber(dia)} m<br />`)}
@@ -80,7 +82,7 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
 	`;
 
   const vehicleRecord = `
-		<h3>Vehicle Launch Record</h3>
+		<h3>${rocket.fullName} Launch Record</h3>
    	<p>
       ${
         !hasLaunchAttempts
@@ -102,6 +104,8 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
   return `
 		${vehicleIntro}
 		${vehicleStats}
+		${boosterDetails}
+		${spacecraftDetails}
 		${vehicleRecord}
   `;
 }

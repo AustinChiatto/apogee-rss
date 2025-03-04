@@ -7,5 +7,5 @@ function allMissions(missions: Mission[]): Mission[] {
 }
 
 export async function GET() {
-  return createFilteredFeed(allMissions, 'Launch Tracker - All Upcoming', 'Stay up to date with all upcoming rocket launches', 'rss');
+  return createFilteredFeed(allMissions, 'Upcoming Launches', 'Stay up to date with all upcoming rocket launches', 'rss');
 }
