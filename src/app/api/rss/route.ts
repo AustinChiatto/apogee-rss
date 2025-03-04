@@ -30,11 +30,11 @@ export async function GET() {
 
     // create a new RSS feed
     const feed = new RSS({
-      title: 'Upcoming Space Launches',
+      title: 'Apogee Launch Tracker - Upcoming',
       description: 'Stay up to date with the latest rocket launches',
       site_url: 'https://apogee-rss.vercel.app',
       feed_url: 'https://apogee-rss.vercel.app/api/rss',
-      image_url: '',
+      image_url: '/apogee-logo.png',
       language: 'en'
     });
 
