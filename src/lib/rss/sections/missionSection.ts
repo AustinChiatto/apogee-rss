@@ -27,7 +27,7 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
 		<br />
     <h2>Mission</h2>
     <p>
-      ${renderIf(missionDetails.type, (type) => `<strong>Payload Type:</strong> ${type}<br />`)}
+      ${renderIf(missionDetails.type, (type) => `<strong>Type:</strong> ${type}<br />`)}
       ${renderIf(
         missionDetails.orbitName,
         (orbit) => `

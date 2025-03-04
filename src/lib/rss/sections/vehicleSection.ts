@@ -49,21 +49,19 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
 			<p>
 				${renderIf(spacecraft.spacecraft?.name, (name) => `<strong>Name:</strong> ${name}<br />`)}
 				${renderIf(spacecraft.destination, (dest) => `<strong>Destination:</strong> ${dest}<br />`)}
+				${renderIf(
+          spacecraft.landing,
+          (landing) => `
+				<strong>Landing:</strong> 
+					${landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Planned') : 'No attempt'}
+					${renderIf(landing.location?.name, (name) => ` in ${name}`)}
+					${renderIf(landing.description, (desc) => `<br /><em>${desc}</em>`)}
+			`
+        )}
 				${renderIf(spacecraft.spacecraft?.spacecraft_config?.capability, (capability) => `<strong>Capability:</strong> ${capability}<br />`)}
 			</p>
 			
 			${renderIf(spacecraft.spacecraft?.description, (desc) => `<p>${desc}</p>`)}
-			
-			${renderIf(
-        spacecraft.landing,
-        (landing) => `
-				<p><strong>Landing:</strong> 
-					${landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Planned') : 'No attempt'}
-					${renderIf(landing.location?.name, (name) => ` in ${name}`)}
-					${renderIf(landing.description, (desc) => `<br /><em>${desc}</em>`)}
-				</p>
-			`
-      )}
 		`
   )}
 	`;
@@ -82,7 +80,7 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
 	`;
 
   const vehicleRecord = `
-		<h3>${rocket.fullName} Launch Record</h3>
+		<h3>${rocket.name} Launch Record</h3>
    	<p>
       ${
         !hasLaunchAttempts

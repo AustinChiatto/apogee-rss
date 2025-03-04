@@ -2,6 +2,7 @@ import RSS from 'rss';
 import { Mission } from '@/types/missionProps';
 import { getMissionDetails } from '@/lib/missionUtils';
 import { buildRssItemDescription } from './rssBuilder';
+import { getUpcomingMissions } from '../launchData';
 
 export async function createFilteredFeed(filter: (missions: Mission[]) => Mission[], feedTitle: string, feedDescription: string, feedPath: string) {
   try {
@@ -50,18 +51,4 @@ export async function createFilteredFeed(filter: (missions: Mission[]) => Missio
     const message = error instanceof Error ? error.message : 'Unknown error occurred';
     return new Response(JSON.stringify({ error: message }), { status: 500 });
   }
-}
-
-// fetch upcoming missions
-async function getUpcomingMissions(): Promise<Mission[]> {
-  const res = await fetch('https://ll.thespacedevs.com/2.2.0/launch/upcoming/?mode=detailed', {
-    next: { revalidate: 3600 }
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch upcoming missions');
-  }
-
-  const data = await res.json();
-  return data.results ?? [];
 }
