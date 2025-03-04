@@ -83,11 +83,13 @@ export async function GET() {
 
 			
 			<h2>${providerDetails.name}</h2>
+			<img src="${providerDetails.logo}" alt="Launch image" style="max-width:100%; height:auto;" />
 			<p>${truncate(providerDetails.desc, 310)} <a href="${providerDetails.info_url}">Read More</a></p>
 			<p><strong>Administrator</strong> - ${providerDetails.administrator}
 			</br><strong>Type</strong> - ${providerDetails.type}
-			</br><strong>Founding Year</strong> - ${providerDetails.foundingYear}</p>
-			</br><strong>Launchers</strong> - ${providerDetails.launchers}</p>
+			</br><strong>Founding Year</strong> - ${providerDetails.foundingYear}
+			</br><strong>Launchers</strong> - ${providerDetails.launchers}
+			</br><strong>Spacecraft</strong> - ${providerDetails.spacecraft}</p>
 
 			<h3>Launch & Landing Record</h3>
 			<p><strong>Successful Launches</strong> - ${providerDetails.launchSuccessCount ?? 'N/A'}
