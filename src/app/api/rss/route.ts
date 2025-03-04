@@ -25,10 +25,10 @@ async function getUpcomingMissions(): Promise<Mission[]> {
 
 export async function GET() {
   try {
-    // 1. fetch upcoming missions
+    // fetch upcoming missions
     const upcomingMissions = await getUpcomingMissions();
 
-    // 2. create a new RSS feed
+    // create a new RSS feed
     const feed = new RSS({
       title: 'Upcoming Space Launches',
       description: 'Stay up to date with the latest rocket launches',
@@ -38,7 +38,7 @@ export async function GET() {
       language: 'en'
     });
 
-    // 3. convert missions to rss items
+    // convert missions to rss items
     upcomingMissions.forEach((mission) => {
       const missionDetails = getMissionDetails(mission);
       const rocketDetails = getVehicleDetails(mission.rocket);
@@ -46,41 +46,50 @@ export async function GET() {
 
       const customDescription = `
 			<img src="${mission.image}" alt="Launch image" style="max-width:100%; height:auto;" />
-			<a href="${mission.url}">Watch Now</a>
 			</br>
 			<p><strong>Launch Status</strong>: ${missionDetails.statusName}</p>
 			<p><strong>Launch Time</strong>: ${missionDetails.net}</p>
 			</br>
+
+
 			<h2>Mission Details</h2>
+			<p>${truncate(missionDetails.desc, 310)}</p>
+			<img src="${missionDetails.vidThumb}" alt="Launch image" style="max-width:100%; height:auto;" />
+			<p><a href="${missionDetails.vidUrl}">Watch Now</a></p>
 			<p><strong>Mission Type</strong> - ${missionDetails.type}
 			</br><strong>Mission Destination</strong> - ${missionDetails.orbitName}
 			</br><strong>Program</strong> - (Add program info if needed)
 			</br><strong>Launch site</strong> - ${missionDetails.padName}</p>
-			<p>${truncate(missionDetails.desc, 310)}</p>
 			</br>
+
+
 			<h2>${rocketDetails.fullName}</h2>
-			<p>${truncate(rocketDetails.desc, 310)}</p>
-			<a href="${rocketDetails.info_url}">Read More</a>
-			<h5>Vehicle Stats</h5>
+			<p>${truncate(rocketDetails.desc, 310)} <a href="${rocketDetails.info_url}">Read More</a></p>
+			
+			<h3>Vehicle Stats</h3>
 			<p><strong>Length</strong> - ${rocketDetails.length ?? 'N/A'} m
 			</br><strong>Diameter</strong> - ${rocketDetails.diameter ?? 'N/A'} m
 			</br><strong>Launch Mass</strong> - ${rocketDetails.launchCost ?? 'N/A'}
 			</br><strong>LEO Capacity</strong> - ${rocketDetails.capacityLeo ?? 'N/A'}
 			</br><strong>GTO Capacity</strong> - ${rocketDetails.capacityGto ?? 'N/A'}
 			</br><strong>Thrust</strong> - ${rocketDetails.thrustTo ?? 'N/A'} kN</p>
-			<h5>Launch & Landing Record</h5>
+
+			<h3>Launch & Landing Record</h3>
 			<p><strong>Successful Launches</strong> - ${rocketDetails.launchSuccessCount ?? 'N/A'}
 			</br><strong>Failed Launches</strong> - ${rocketDetails.launchFailedCount ?? 'N/A'}
 			</br><strong>Successful Landings</strong> - ${rocketDetails.landingSuccessCount ?? 'N/A'}
 			</br><strong>Failed Landings</strong> - ${rocketDetails.landingFailedCount ?? 'N/A'}</p>
 			</br>
+
+			
 			<h2>${providerDetails.name}</h2>
+			<p>${truncate(providerDetails.desc, 310)} <a href="${providerDetails.info_url}">Read More</a></p>
 			<p><strong>Administrator</strong> - ${providerDetails.administrator}
 			</br><strong>Type</strong> - ${providerDetails.type}
 			</br><strong>Founding Year</strong> - ${providerDetails.foundingYear}</p>
-			<p>${truncate(providerDetails.desc, 310)}</p>
-			<a href="${providerDetails.info_url}">Read More</a>
-			<h5>Launch & Landing Record</h5>
+			</br><strong>Launchers</strong> - ${providerDetails.launchers}</p>
+
+			<h3>Launch & Landing Record</h3>
 			<p><strong>Successful Launches</strong> - ${providerDetails.launchSuccessCount ?? 'N/A'}
 			</br><strong>Failed Launches</strong> - ${providerDetails.launchFailedCount ?? 'N/A'}
 			</br><strong>Successful Landings</strong> - ${providerDetails.landingSuccessCount ?? 'N/A'}
@@ -99,10 +108,10 @@ export async function GET() {
       });
     });
 
-    // 4. generate xml
+    // generate xml
     const xml = feed.xml({ indent: true });
 
-    // 5. return response with the rss xml
+    // return response with the rss xml
     return new Response(xml, {
       status: 200,
       headers: { 'Content-Type': 'application/rss+xml' }
