@@ -36,20 +36,20 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
 		</p>
 
 		${renderIf(
-      mission.program[0].name,
-      (name) => `
-			<p>
-      <strong>Program:</strong> ${name} - ${mission.program[0].type}<br />
-      
-      ${renderIf(
-        mission.program[0].description,
-        (desc) => `
-        ${desc}
-      `
-      )}
-			</p>	
+      mission.program && mission.program.length > 0,
+      () => `
+				<p>
+					<strong>Program:</strong> ${mission.program[0].name} - ${mission.program[0].type.name}<br />
+					
+					${renderIf(
+            mission.program[0].description,
+            (desc) => `
+						${desc}
+						`
+          )}
+				</p>  
 			`
-    )}
+    )}		
     
       
 		<p>
