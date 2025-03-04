@@ -102,7 +102,96 @@ export type Rocket = {
     turn_around_time_days: number | null;
     previous_flight: string | null;
   }[];
-  spacecraft_stage: unknown | null;
+  spacecraft_stage: {
+    id: number;
+    url: string;
+    mission_end: string | null;
+    destination: string;
+    launch_crew: any[];
+    onboard_crew: any[];
+    landing_crew: any[];
+    spacecraft: {
+      id: number;
+      url: string;
+      name: string;
+      serial_number: string;
+      is_placeholder: boolean;
+      in_space: boolean;
+      time_in_space: string;
+      time_docked: string;
+      flights_count: number;
+      mission_ends_count: number;
+      status: {
+        id: number;
+        name: string;
+      };
+      description: string;
+      spacecraft_config: {
+        id: number;
+        url: string;
+        name: string;
+        type: {
+          id: number;
+          name: string;
+        };
+        agency: {
+          id: number;
+          url: string;
+          name: string;
+          featured: boolean;
+          type: string;
+          country_code: string;
+          abbrev: string;
+          description: string;
+          administrator: string;
+          founding_year: string;
+          launchers: string;
+          spacecraft: string;
+          parent: any | null;
+          image_url: string;
+          logo_url: string;
+        };
+        in_use: boolean;
+        capability: string;
+        history: string;
+        details: string;
+        maiden_flight: string;
+        height: number;
+        diameter: number;
+        human_rated: boolean;
+        crew_capacity: number;
+        payload_capacity: number;
+        payload_return_capacity: number | null;
+        flight_life: string;
+        image_url: string;
+        nation_url: string | null;
+        wiki_link: string;
+        info_link: string;
+      };
+    };
+    landing: {
+      id: number;
+      attempt: boolean;
+      success: boolean | null;
+      description: string;
+      downrange_distance: number | null;
+      location: {
+        id: number;
+        name: string;
+        abbrev: string;
+        description: string;
+        location: string | null;
+        successful_landings: number;
+      };
+      type: {
+        id: number;
+        name: string;
+        abbrev: string;
+        description: string;
+      };
+    };
+    docking_events: any[];
+  } | null;
 };
 
 export type Provider = {

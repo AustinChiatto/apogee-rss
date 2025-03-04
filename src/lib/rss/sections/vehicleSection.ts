@@ -1,5 +1,5 @@
 import { Mission } from '@/types/missionProps';
-import { renderIf } from '../utils/templateUtils';
+import { renderIf, formatNumber } from '../utils/templateUtils';
 import { getVehicleDetails } from '@/lib/missionUtils';
 
 export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof getVehicleDetails>): string {
@@ -17,9 +17,10 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
 		${renderIf(
       rocket.info_url,
       (url) => `
-      <p><a href="${url}">Explore the ${rocket.fullName || 'launch vehicle'}</a></p>
+      <p><a href="${url}">Explore ${rocket.fullName || 'launch vehicle'}</a></p>
     `
     )}
+
     ${renderIf(
       booster,
       (stage) => `
@@ -36,18 +37,45 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
       </p>
     `
     )}
+
+		${renderIf(
+      mission.rocket?.spacecraft_stage,
+      (spacecraft) => `
+				<h3>Spacecraft Information</h3>
+				<p>
+					${renderIf(spacecraft.spacecraft?.name, (name) => `<strong>Name:</strong> ${name}<br />`)}
+					${renderIf(spacecraft.spacecraft?.serial_number, (serial) => `<strong>Serial Number:</strong> ${serial}<br />`)}
+					${renderIf(spacecraft.spacecraft?.status?.name, (status) => `<strong>Status:</strong> ${status}<br />`)}
+					${renderIf(spacecraft.destination, (dest) => `<strong>Destination:</strong> ${dest}<br />`)}
+					${renderIf(spacecraft.spacecraft?.spacecraft_config?.capability, (capability) => `<strong>Capability:</strong> ${capability}<br />`)}
+				</p>
+				
+				${renderIf(spacecraft.spacecraft?.description, (desc) => `<p>${desc}</p>`)}
+				
+				${renderIf(
+          spacecraft.landing,
+          (landing) => `
+					<p><strong>Landing:</strong> 
+						${landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Planned') : 'No attempt'}
+						${renderIf(landing.location?.name, (name) => ` in ${name}`)}
+						${renderIf(landing.description, (desc) => `<br /><em>${desc}</em>`)}
+					</p>
+				`
+        )}
+			`
+    )}
 	`;
 
   const vehicleStats = `
 		<h3>Vehicle Stats</h3>
     <p>
-      ${renderIf(rocket.length, (len) => `<strong>Length:</strong> ${len} m<br />`)}
-      ${renderIf(rocket.diameter, (dia) => `<strong>Diameter:</strong> ${dia} m<br />`)}
-      ${renderIf(rocket.launchMass, (mass) => `<strong>Launch Mass:</strong> ${mass} tons<br />`)}
-      ${renderIf(rocket.launchCost, (cost) => `<strong>Launch Cost:</strong> $${parseInt(cost).toLocaleString()}<br />`)}
-      ${renderIf(rocket.capacityLeo, (leo) => `<strong>LEO Capacity:</strong> ${leo} kg<br />`)}
-      ${renderIf(rocket.capacityGto, (gto) => `<strong>GTO Capacity:</strong> ${gto} kg<br />`)}
-      ${renderIf(rocket.thrustTo, (thrust) => `<strong>Thrust:</strong> ${thrust} kN`)}
+      ${renderIf(rocket.length, (len) => `<strong>Length:</strong> ${formatNumber(len)} m<br />`)}
+      ${renderIf(rocket.diameter, (dia) => `<strong>Diameter:</strong> ${formatNumber(dia)} m<br />`)}
+      ${renderIf(rocket.launchMass, (mass) => `<strong>Launch Mass:</strong> ${formatNumber(mass)} tons<br />`)}
+      ${renderIf(rocket.launchCost, (cost) => `<strong>Launch Cost:</strong> $${parseInt(formatNumber(cost)).toLocaleString()}<br />`)}
+      ${renderIf(rocket.capacityLeo, (leo) => `<strong>LEO Capacity:</strong> ${formatNumber(leo)} kg<br />`)}
+      ${renderIf(rocket.capacityGto, (gto) => `<strong>GTO Capacity:</strong> ${formatNumber(gto)} kg<br />`)}
+      ${renderIf(rocket.thrustTo, (thrust) => `<strong>Thrust:</strong> ${formatNumber(thrust)} kN`)}
     </p>
 	`;
 

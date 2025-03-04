@@ -35,3 +35,53 @@ export function renderIf<T>(value: T | null | undefined, render: (val: T) => str
 export function renderSection(content: string): string {
   return content.trim() ? content : '';
 }
+
+// date to human string
+export const formatDate = (dateString: string): string => {
+  try {
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+      return dateString;
+    }
+
+    const dateOptions: Intl.DateTimeFormatOptions = {
+      month: 'long',
+      day: 'numeric'
+    };
+
+    const timeOptions: Intl.DateTimeFormatOptions = {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZoneName: 'short'
+    };
+
+    const formattedDate = date.toLocaleDateString('en-US', dateOptions);
+    const formattedTime = date.toLocaleTimeString('en-US', timeOptions);
+
+    return `${formattedDate}, ${formattedTime}`;
+  } catch (error) {
+    console.error('Error formatting date:', error);
+    return dateString;
+  }
+};
+
+// formats large numbers
+export const formatNumber = (value: number | string, decimals: number = 0): string => {
+  try {
+    const num = typeof value === 'string' ? parseFloat(value) : value;
+
+    if (isNaN(num)) {
+      return String(value);
+    }
+
+    return num.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
+  } catch (error) {
+    console.error('Error formatting number:', error);
+    return String(value);
+  }
+};

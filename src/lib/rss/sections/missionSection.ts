@@ -1,5 +1,5 @@
 import { Mission } from '@/types/missionProps';
-import { renderIf } from '../utils/templateUtils';
+import { renderIf, formatDate } from '../utils/templateUtils';
 import { getMissionDetails } from '@/lib/missionUtils';
 
 export function buildMissionSection(mission: Mission, missionDetails: ReturnType<typeof getMissionDetails>): string {
@@ -14,18 +14,16 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
     
     ${renderIf(missionDetails.statusName, (status) => `<p><strong>Launch Status:</strong> ${status}</p>`)}
     
-    ${renderIf(missionDetails.net, (time) => `<p><strong>Launch Time:</strong> ${time}</p>`)}
+    ${renderIf(missionDetails.net, (time) => `<p><strong>Launch Time:</strong> ${formatDate(time)}</p>`)}
 
 		${renderIf(missionDetails.desc, (desc) => `<p>${desc}</p>`)}
 
 		${renderIf(
       missionDetails.vidUrl,
       (url) => `
-    <a href="${url}">
-      Watch launch
-    </a>
-		<br />
-  `
+			<p><a href="${url}">Watch launch</a></p>
+			<br />
+			`
     )}
 
 
