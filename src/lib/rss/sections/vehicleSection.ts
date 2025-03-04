@@ -1,5 +1,5 @@
 import { Mission } from '@/types/missionProps';
-import { renderIf, truncate } from '../utils/templateUtils';
+import { renderIf } from '../utils/templateUtils';
 import { getVehicleDetails } from '@/lib/missionUtils';
 
 export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof getVehicleDetails>): string {
@@ -13,7 +13,7 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
 		<br />
 		<h2>Launch Vehicle - ${rocket.fullName || 'Unknown'}</h2>
     ${renderIf(rocket.image_url, (img) => `<img src="${img}" alt="Rocket image" style="max-width:100%; height:auto;" />`)}
-    ${renderIf(rocket.desc, (desc) => `<p>${truncate(desc, 310)}</p>`)}
+    ${renderIf(rocket.desc, (desc) => `<p>${desc}</p>`)}
 		${renderIf(
       rocket.info_url,
       (url) => `
@@ -23,7 +23,7 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
     ${renderIf(
       booster,
       (stage) => `
-      <h3>Booster Information</h3>
+      <h3>Booster Details</h3>
       <p>
         ${renderIf(stage.launcher?.serial_number, (serial) => `<strong>Booster:</strong> ${serial}<br />`)}
         ${renderIf(
@@ -52,7 +52,7 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
 	`;
 
   const vehicleRecord = `
-		<h3>Launch Record</h3>
+		<h3>Vehicle Launch Record</h3>
    	<p>
       ${
         !hasLaunchAttempts

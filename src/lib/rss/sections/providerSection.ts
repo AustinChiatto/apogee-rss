@@ -1,5 +1,5 @@
 import { getProviderDetails } from '@/lib/missionUtils';
-import { renderIf, truncate } from '../utils/templateUtils';
+import { renderIf } from '../utils/templateUtils';
 import { Mission } from '@/types/missionProps';
 
 export function buildProviderSection(mission: Mission, provider: ReturnType<typeof getProviderDetails>): string {
@@ -13,7 +13,7 @@ export function buildProviderSection(mission: Mission, provider: ReturnType<type
 		${renderIf(
       provider.desc,
       (desc) => `
-			<p>${truncate(desc, 310)}</p>
+			<p>${desc}</p>
 		`
     )}
 
@@ -37,7 +37,7 @@ export function buildProviderSection(mission: Mission, provider: ReturnType<type
 	`;
 
   const providerRecord = `
-		<h3>Launch Record</h3>
+		<h3>${provider.name} Launch Record</h3>
 		<p>
       ${
         !hasLaunchAttempts
