@@ -17,7 +17,7 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
 		${renderIf(
       rocket.info_url,
       (url) => `
-      <p><a href="${url}">Learn more about ${rocket.fullName || 'this vehicle'}</a></p>
+      <p><a href="${url}">Explore the ${rocket.fullName || 'launch vehicle'}</a></p>
     `
     )}
     ${renderIf(

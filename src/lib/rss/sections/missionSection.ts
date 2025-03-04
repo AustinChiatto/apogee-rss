@@ -28,8 +28,8 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
       ${renderIf(
         missionDetails.orbitName,
         (orbit) => `
-        <strong>Destination:</strong> ${missionDetails.orbitAbbrev} - ${orbit}<br />
-        ${renderIf(missionDetails.orbitDesc, (desc) => `${desc}`)}
+        <strong>Destination:</strong> ${orbit} (${missionDetails.orbitAbbrev})
+        ${renderIf(missionDetails.orbitDesc, (desc) => ` - ${desc}`)}
         <br />
       `
       )}
@@ -38,14 +38,16 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
 			${renderIf(missionDetails.padName, (pad) =>
         renderIf(
           missionDetails.mapUrl,
-          (url) => `<strong>Launch site:</strong> <a href="${url}">${pad}</a>`,
+          (url) => `<strong>Launch site:</strong> <a href="${url}">${pad}</a><br />`,
           () => `<strong>Launch site:</strong> ${pad}`
         )
       )}
 			${renderIf(
         mission.rocket?.launcher_stage?.[0]?.landing,
         (landing) => `
-				<strong>Landing:</strong> ${landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Attempted') : 'No attempt'}
+				<strong>Landing:</strong> ${
+          landing.attempt ? (landing.success !== null ? (landing.success ? 'Successful' : 'Failed') : 'Will Attempt') : 'No attempt'
+        }
 			`
       )}
 		</p>
@@ -62,6 +64,8 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
   const videoSection = renderIf(
     missionDetails.vidUrl,
     (url) => `
+		<br />
+		<h2>Watch This Launch</h2>
     <a href="${url}">
       <img 
         src="${missionDetails.vidThumb ?? '/image-placeholder.jpg'}" 
@@ -69,6 +73,7 @@ export function buildMissionSection(mission: Mission, missionDetails: ReturnType
         style="max-width:100%; height:auto;" 
       />
     </a>
+		<br />
   `
   );
 

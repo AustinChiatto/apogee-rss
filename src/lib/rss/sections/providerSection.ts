@@ -20,7 +20,7 @@ export function buildProviderSection(mission: Mission, provider: ReturnType<type
 		${renderIf(
       provider.info_url,
       (url) => `
-			<p><a href="${url}">Discover more of ${provider.name || 'this provider'}</a></p>
+			<p><a href="${url}">Read more about ${provider.name || 'this provider'}</a></p>
 		`
     )}		
 	`;
