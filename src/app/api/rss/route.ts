@@ -37,32 +37,38 @@ export async function GET() {
       const providerDetails = getProviderDetails(mission.launch_service_provider);
 
       const customDescription = `
-    <p><strong>Launch time</strong>: ${missionDetails.net}</p>
-    <p>${missionDetails.statusDesc}</p>
-
-    <h2>Mission</h2>
-    <p><strong>Mission Type</strong>: ${missionDetails.type}</p>
-    <p><strong>Mission Destination</strong>: ${missionDetails.orbitName}</p>
-    <p><strong>Program</strong>: (Add program info if needed)</p>
-    <p><strong>Launch site</strong>: ${missionDetails.padName}</p>
-    <p>${missionDetails.desc}</p>
-
-    <h2>Launch Vehicle</h2>
-    <p><strong>Configuration</strong>: ${rocketDetails.name}</p>
-
-    <h3>Stats</h3>
-    <p><strong>Length</strong>: ${rocketDetails.length ?? 'N/A'} m</p>
-    <p><strong>Diameter</strong>: ${rocketDetails.diameter ?? 'N/A'} m</p>
-    <p><strong>Launch Mass</strong>: ${rocketDetails.launchCost ?? 'N/A'}</p>
-    <p><strong>LEO Capacity</strong>: ${rocketDetails.capacityLeo ?? 'N/A'}</p>
-    <p><strong>GTO Capacity</strong>: ${rocketDetails.capacityGto ?? 'N/A'}</p>
-    <p><strong>Thrust</strong>: ${rocketDetails.thrustTo ?? 'N/A'} kN</p>
-
-    <h2>${providerDetails.name}</h2>
-    <p>${providerDetails.desc}</p>
-    <p><strong>Administrator</strong>: ${providerDetails.administrator}</p>
-    <p><strong>Type</strong>: ${providerDetails.type}</p>
-    <p><strong>Founding Year</strong>: ${providerDetails.foundingYear}</p>
+			<p>${missionDetails.statusName}</p>
+			<p><strong>Launch time</strong>: ${missionDetails.net}</p>
+			</br>
+			</br>
+			<h2>Mission Details</h2>
+			<p><strong>Mission Type</strong>: ${missionDetails.type}</p>
+			<p><strong>Mission Destination</strong>: ${missionDetails.orbitName}</p>
+			<p><strong>Program</strong>: (Add program info if needed)</p>
+			<p><strong>Launch site</strong>: ${missionDetails.padName}</p>
+			<p>${missionDetails.desc}</p>
+			</br>
+			</hr>
+			</br>
+			<h2>Launch Vehicle</h2>
+			<p><strong>Configuration</strong>: ${rocketDetails.fullName}</p>
+			<p>${rocketDetails.desc}</p>
+			</br>
+			<h3>Stats</h3>
+			<p><strong>Length</strong>: ${rocketDetails.length ?? 'N/A'} m</p>
+			<p><strong>Diameter</strong>: ${rocketDetails.diameter ?? 'N/A'} m</p>
+			<p><strong>Launch Mass</strong>: ${rocketDetails.launchCost ?? 'N/A'}</p>
+			<p><strong>LEO Capacity</strong>: ${rocketDetails.capacityLeo ?? 'N/A'}</p>
+			<p><strong>GTO Capacity</strong>: ${rocketDetails.capacityGto ?? 'N/A'}</p>
+			<p><strong>Thrust</strong>: ${rocketDetails.thrustTo ?? 'N/A'} kN</p>
+			</br>
+			</hr>
+			</br>
+			<h2>${providerDetails.name}</h2>
+			<p>${providerDetails.desc}</p>
+			<p><strong>Administrator</strong>: ${providerDetails.administrator}</p>
+			<p><strong>Type</strong>: ${providerDetails.type}</p>
+			<p><strong>Founding Year</strong>: ${providerDetails.foundingYear}</p>
   `;
 
       feed.item({
