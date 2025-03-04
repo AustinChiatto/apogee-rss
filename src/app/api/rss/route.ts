@@ -1,6 +1,6 @@
 import RSS from 'rss';
 import { Mission } from '@/types/missionProps';
-import { getMissionDetails, getProviderDetails, getVehicleDetails } from '@/lib/missionUtils';
+import { getMissionDetails } from '@/lib/missionUtils';
 import { buildRssItemDescription } from '@/lib/rssBuilder';
 
 function truncate(text: string, maxCharacters: number): string {
