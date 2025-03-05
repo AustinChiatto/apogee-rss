@@ -1,4 +1,3 @@
-// app/api/cron/update-feeds/route.ts
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getUpcomingMissions } from '@/lib/launchData';
