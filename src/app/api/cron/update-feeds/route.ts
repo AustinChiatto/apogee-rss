@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getUpcomingMissions } from '@/lib/launchData';
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     // force refresh the data
     const missions = await getUpcomingMissions(true);

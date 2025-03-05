@@ -27,7 +27,7 @@ export default function Home() {
           description: 'The feed URL has been copied to your clipboard'
         });
       })
-      .catch((err) => {
+      .catch(() => {
         toast('Uh oh!', {
           description: 'Something went wrong, please try again later.'
         });
