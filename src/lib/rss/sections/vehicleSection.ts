@@ -58,7 +58,7 @@ export function buildVehicleSection(mission: Mission, rocket: ReturnType<typeof 
 					${renderIf(landing.description, (desc) => `<br /><em>${desc}</em>`)}
 			`
         )}
-				${renderIf(spacecraft.spacecraft?.spacecraft_config?.capability, (capability) => `<strong>Capability:</strong> ${capability}<br />`)}
+				${renderIf(spacecraft.spacecraft?.spacecraft_config?.capability, (capability) => `<br /><strong>Capability:</strong> ${capability}<br />`)}
 			</p>
 			
 			${renderIf(spacecraft.spacecraft?.description, (desc) => `<p>${desc}</p>`)}
